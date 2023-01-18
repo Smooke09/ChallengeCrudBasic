@@ -1,10 +1,11 @@
 import server from "./config/server";
 
-server.listen(3333, () => {
+const PORT = process.env.PORT || 3333;
+
+server.listen(PORT, () => {
   console.log({
     message: "Server is running",
-    port: 3333,
+    port: PORT,
     env: process.env.NODE_ENV,
   });
 });
-
