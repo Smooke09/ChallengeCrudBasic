@@ -5,8 +5,8 @@
     "version": "1.0.0",
     "description": "CRUD de restaurantes",
     "contact": {
-      "name": "Pedro Lucas",
-      "email": "pedrolucas1014@hotmail.com"
+      "name": "Chanllenge",
+      "email": "email"
     }
   },
   "host": "testcrud.herokuapp.com/v1",
