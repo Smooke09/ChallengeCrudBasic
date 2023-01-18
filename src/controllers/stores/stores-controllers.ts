@@ -13,7 +13,7 @@ class StoresController {
     const storesInactive = filterStoresInactive(stores);
 
     if (active === "true") {
-      return res.status(201).json({
+      return res.status(200).json({
         message: "Stores found successfully",
         stores: storesInactive.map((store) => parseBusinessHours(store)),
       });
@@ -25,7 +25,7 @@ class StoresController {
       (store) => store.store_is_active === true
     );
 
-    return res.status(201).json({
+    return res.status(200).json({
       message: "Store created successfully",
       stores: storesInactiveParsed,
     });
@@ -42,8 +42,8 @@ class StoresController {
       });
     }
 
-    return res.status(201).json({
-      message: "Store created successfully",
+    return res.status(200).json({
+      message: "Store found successfully",
       store: parseBusinessHours(store),
     });
   }
@@ -80,7 +80,7 @@ class StoresController {
         message: "Store not found",
       });
 
-    return res.status(201).json({
+    return res.status(200).json({
       message: "Store updated successfully",
       store: parseBusinessHours(updatedStore),
     });
@@ -101,8 +101,8 @@ class StoresController {
         message: "Store not found",
       });
 
-    return res.status(201).json({
-      message: "Store updated successfully",
+    return res.status(200).json({
+      message: "Store updated business hours",
       store: parseBusinessHours(updatedStore),
     });
   }
@@ -117,7 +117,7 @@ class StoresController {
         message: "Store not found",
       });
 
-    return res.status(201).json({
+    return res.status(200).json({
       message: "Store updated successfully",
       store: parseBusinessHours(store),
     });
