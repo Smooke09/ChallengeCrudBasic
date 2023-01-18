@@ -5,6 +5,8 @@
   "main": "index.js",
   "scripts": {
     "migration:run": "npx knex migrate:latest",
+    "build": "tsc",
+    "start": "node dist/src/index.js",
     "seeds:run": "knex seed:run",
     "migrate:rollback": "npx knex migrate:rollback",
     "test": "jest --watchAll  --forceExit",
