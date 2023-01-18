@@ -10,6 +10,6 @@ router.post("/stores/create", StoresController.createStore);
 router.put("/stores/update/:id", StoresController.updateStore);
 router.put("/stores/:id/business-hours", StoresController.updateBusinessHours);
 router.put("/stores/:id/inactive", StoresController.inactiveStore);
-router.delete("/stores/:id", StoresController.storeDelete);
+router.delete("/stores/delete/:id", StoresController.storeDelete);
 
 export default router;

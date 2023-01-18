@@ -237,7 +237,7 @@
         "responses": {}
       }
     },
-    "/stores/{id}": {
+    "/stores/delete/{id}": {
       "delete": {
         "tags": ["Stores"],
         "summary": "Deletar um restaurante",
