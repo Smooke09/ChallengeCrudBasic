@@ -9,9 +9,9 @@
       "email": "email"
     }
   },
-  "host": "testcrud.herokuapp.com/v1",
+  "host": "tscrudchallenge-env.eba-n9cea7ek.us-east-1.elasticbeanstalk.com/v1",
   "basePath": "/",
-  "schemes": ["https"],
+  "schemes": ["http"],
   "consumes": ["application/json"],
   "paths": {
     "/stores": {
