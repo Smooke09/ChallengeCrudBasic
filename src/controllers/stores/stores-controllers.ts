@@ -2,14 +2,32 @@ import { Request, Response } from "express";
 import Stores from "../../model/storeModel";
 import StoresUsesCases from "../../useCases/storesUseCases";
 import { parseBusinessHours } from "../../useCases/helpers/parseBusinessHours";
+import { filterStoresInactive } from "../../useCases/helpers/filterStoresInactive";
 
 class StoresController {
   async getStores(req: Request, res: Response) {
     const stores = await StoresUsesCases.getStores();
 
+    const { active } = req.query;
+
+    const storesInactive = filterStoresInactive(stores);
+
+    if (active === "true") {
+      return res.status(201).json({
+        message: "Stores found successfully",
+        stores: storesInactive.map((store) => parseBusinessHours(store)),
+      });
+    }
+
+    const storesParsed = stores.map((store) => parseBusinessHours(store));
+
+    const storesInactiveParsed = storesParsed.filter(
+      (store) => store.store_is_active === true
+    );
+
     return res.status(201).json({
       message: "Store created successfully",
-      stores: stores.map((store) => parseBusinessHours(store)),
+      stores: storesInactiveParsed,
     });
   }
 

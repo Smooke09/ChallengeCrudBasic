@@ -1,0 +1,249 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "Restaurant CRUD",
+        "version": "1.0.0",
+        "description": "CRUD de restaurantes",
+        "contact": {
+            "name": "Pedro Lucas",
+            "email": "pedrolucas1014@hotmail.com"
+        }
+    },
+    "host": "localhost:3333/v1",
+    "basePath": "/",
+    "schemes": ["http", "https"],
+    "consumes": ["application/json"],
+    "paths": {
+        "/stores": {
+            "get": {
+                "tags": ["Stores"],
+                "summary": "Listar todos os restaurantes",
+                "description": "Listar todos os restaurantes",
+                "produces": ["application/json"],
+                "responses": {}
+            },
+            "post": {
+                "tags": ["Stores"],
+                "summary": "Criar um novo restaurante",
+                "description": "Criar um novo restaurante",
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "Dados do restaurante essa rota aceita um array de objetos  no campo store_business_hours para cadastrar os horários de funcionamento do restaurante o 'id' é o dia que inicia a semana sendo 0 domingo e 6 sábado. Caso queira pode passa no mesmo padrao que esta no exemplo para cadastrar mais de um horário de funcionamento",
+                        "required": true,
+                        "schema": {
+                            "properties": {
+                                "store_name": {
+                                    "type": "string",
+                                    "example": "Nome do restaurante"
+                                },
+                                "store_type": {
+                                    "type": "string",
+                                    "example": "Endereço do restaurante"
+                                },
+                                "store_address": {
+                                    "type": "string",
+                                    "example": "Tipo do restaurante"
+                                },
+                                "store_city": {
+                                    "type": "string",
+                                    "example": "Cidade do restaurante"
+                                },
+                                "store_business_hours": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object",
+                                        "example": {
+                                            "id": 0,
+                                            "day_of_week": "Domingo",
+                                            "open_time": "08:00",
+                                            "close_time": "18:00"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {}
+            }
+        },
+        "/stores/{id}": {
+            "put": {
+                "tags": ["Stores"],
+                "summary": "Atualizar um restaurante",
+                "description": "Atualizar um restaurante",
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID do restaurante",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "Dados do restaurante essa rota aceita um array de objetos  no campo store_business_hours para editar os horários de funcionamento do restaurante o 'id' é o dia que inicia a semana sendo 0 domingo e 6 sábado. Caso queira pode passa no mesmo padrao que esta no exemplo para editar mais de um horário de funcionamento",
+                        "required": true,
+                        "schema": {
+                            "properties": {
+                                "store_name": {
+                                    "type": "string",
+                                    "example": "Nome do restaurante"
+                                },
+                                "store_type": {
+                                    "type": "string",
+                                    "example": "Endereço do restaurante"
+                                },
+                                "store_address": {
+                                    "type": "string",
+                                    "example": "Tipo do restaurante"
+                                },
+                                "store_city": {
+                                    "type": "string",
+                                    "example": "Cidade do restaurante"
+                                },
+                                "store_business_hours": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object",
+                                        "example": {
+                                            "id": 0,
+                                            "day_of_week": "Domingo",
+                                            "open_time": "08:00",
+                                            "close_time": "18:00"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {}
+            }
+        },
+        "/stores/{id}/business-hours": {
+            "put": {
+                "tags": ["Stores"],
+                "summary": "Atualizar os horários de funcionamento de um restaurante",
+                "description": "Atualizar os horários de funcionamento de um restaurante",
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID do restaurante",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "Essa rota segue o mesmo padrão da rota de criar um restaurante so que ela serve so para altera o horario de funcionamento do restaurante",
+                        "required": true,
+                        "schema": {
+                            "properties": {
+                                "store_business_hours": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object",
+                                        "example": {
+                                            "id": 0,
+                                            "day_of_week": "Domingo",
+                                            "open_time": "08:00",
+                                            "close_time": "18:00"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {}
+            }
+        },
+        "/stores/{id}/inactive": {
+            "put": {
+                "tags": ["Stores"],
+                "summary": "Inativar um restaurante",
+                "description": "Inativar um restaurante",
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID do restaurante",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {}
+            }
+        },
+        "/stores/{id}/{date}/isOpen": {
+            "get": {
+                "tags": ["Stores"],
+                "summary": "Verificar se o restaurante está aberto",
+                "description": "Verificar se o restaurante está aberto, essa rota retorna um booleano true para aberto e false para fechado e necessario passar a data no formato YYYY-MM-DD",
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID do restaurante",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "date",
+                        "in": "path",
+                        "description": "Data no formato '2023-01-17%2020:16:00', o '%20' é o espaço entre a data e a hora",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {}
+            }
+        },
+        "/stores/{id}": {
+            "get": {
+                "tags": ["Stores"],
+                "summary": "Listar um restaurante",
+                "description": "Listar um restaurante",
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID do restaurante",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {}
+            }
+        },
+        "/stores/{id}": {
+            "delete": {
+                "tags": ["Stores"],
+                "summary": "Deletar um restaurante",
+                "description": "Deletar um restaurante",
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID do restaurante",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {}
+            }
+        }
+    }
+}

@@ -20,8 +20,19 @@
         "summary": "Listar todos os restaurantes",
         "description": "Listar todos os restaurantes",
         "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "active",
+            "in": "query",
+            "description": "Filtro para listar apenas os restaurantes ativos ou inativos",
+            "required": false,
+            "type": "string"
+          }
+        ],
         "responses": {}
-      },
+      }
+    },
+    "/stores": {
       "post": {
         "tags": ["Stores"],
         "summary": "Criar um novo restaurante",
@@ -41,11 +52,11 @@
                 },
                 "store_type": {
                   "type": "string",
-                  "example": "Endereço do restaurante"
+                  "example": "Tipo do estabelecimento ex: Restaurante, Bar, Lanchonete, etc..."
                 },
                 "store_address": {
                   "type": "string",
-                  "example": "Tipo do restaurante"
+                  "example": "Endereço do restaurante"
                 },
                 "store_city": {
                   "type": "string",
@@ -65,6 +76,24 @@
                 }
               }
             }
+          }
+        ],
+        "responses": {}
+      }
+    },
+    "/store/{id}": {
+      "get": {
+        "tags": ["Stores"],
+        "summary": "Listar um restaurante",
+        "description": "Listar um restaurante",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID do restaurante",
+            "required": true,
+            "type": "string"
           }
         ],
         "responses": {}
@@ -97,11 +126,11 @@
                 },
                 "store_type": {
                   "type": "string",
-                  "example": "Endereço do restaurante"
+                  "example": "Tipo do estabelecimento ex: Restaurante, Bar, Lanchonete, etc.."
                 },
                 "store_address": {
                   "type": "string",
-                  "example": "Tipo do restaurante"
+                  "example": "Endereço do restaurante"
                 },
                 "store_city": {
                   "type": "string",
