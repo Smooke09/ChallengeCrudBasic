@@ -23,6 +23,22 @@ const knexfile: { [key: string]: Knex.Config } = {
       directory: __dirname + "/src/database/seeds",
     },
   },
+  testJest: {
+    client: "pg",
+    connection: {
+      host: "localhost",
+      user: "postgres",
+      password: "password",
+      database: "",
+      charset: "utf8",
+    },
+    migrations: {
+      directory: __dirname + "/src/database/migrations",
+    },
+    seeds: {
+      directory: __dirname + "/src/database/seeds",
+    },
+  },
 };
 
 export default knexfile;

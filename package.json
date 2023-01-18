@@ -9,7 +9,7 @@
     "start": "node dist/src/index.js",
     "seeds:run": "knex seed:run",
     "migrate:rollback": "npx knex migrate:rollback",
-    "test": "jest --watchAll  --forceExit",
+    "test": "export NODE_ENV=jest && jest --passWithNoTests --detectOpenHandles --forceExit",
     "dev": "nodemon --watch 'src/' --exec ts-node src/index.ts  -e ts"
   },
   "keywords": [],
