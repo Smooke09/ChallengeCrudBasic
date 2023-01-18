@@ -29,7 +29,7 @@ const knexfile: { [key: string]: Knex.Config } = {
       host: "localhost",
       user: "postgres",
       password: "password",
-      database: "",
+      database: "testeJest_restaurantys",
       charset: "utf8",
     },
     migrations: {
