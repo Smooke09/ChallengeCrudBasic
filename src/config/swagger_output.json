@@ -32,12 +32,54 @@
         "responses": {}
       }
     },
-    "/stores": {
+    "/store/{id}": {
+      "get": {
+        "tags": ["Stores"],
+        "summary": "Listar um restaurante",
+        "description": "Listar um restaurante",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID do restaurante",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {}
+      }
+    },
+    "/stores/{id}/{date}/isOpen": {
+      "get": {
+        "tags": ["Stores"],
+        "summary": "Verificar se o restaurante está aberto",
+        "description": "Verificar se o restaurante está aberto, essa rota retorna um booleano true para aberto e false para fechado e necessario passar a data no formato YYYY-MM-DD",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID do restaurante",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "date",
+            "in": "path",
+            "description": "Data no formato '2023-01-17%2020:16:00', o '%20' é o espaço entre a data e a hora",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {}
+      }
+    },
+    "/stores/create": {
       "post": {
         "tags": ["Stores"],
         "summary": "Criar um novo restaurante",
         "description": "Criar um novo restaurante",
-        "produces": ["application/json"],
         "parameters": [
           {
             "name": "body",
@@ -81,25 +123,7 @@
         "responses": {}
       }
     },
-    "/store/{id}": {
-      "get": {
-        "tags": ["Stores"],
-        "summary": "Listar um restaurante",
-        "description": "Listar um restaurante",
-        "produces": ["application/json"],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "ID do restaurante",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {}
-      }
-    },
-    "/stores/{id}": {
+    "/stores/update/{id}": {
       "put": {
         "tags": ["Stores"],
         "summary": "Atualizar um restaurante",
@@ -200,49 +224,6 @@
         "tags": ["Stores"],
         "summary": "Inativar um restaurante",
         "description": "Inativar um restaurante",
-        "produces": ["application/json"],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "ID do restaurante",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {}
-      }
-    },
-    "/stores/{id}/{date}/isOpen": {
-      "get": {
-        "tags": ["Stores"],
-        "summary": "Verificar se o restaurante está aberto",
-        "description": "Verificar se o restaurante está aberto, essa rota retorna um booleano true para aberto e false para fechado e necessario passar a data no formato YYYY-MM-DD",
-        "produces": ["application/json"],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "ID do restaurante",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "date",
-            "in": "path",
-            "description": "Data no formato '2023-01-17%2020:16:00', o '%20' é o espaço entre a data e a hora",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {}
-      }
-    },
-    "/stores/{id}": {
-      "get": {
-        "tags": ["Stores"],
-        "summary": "Listar um restaurante",
-        "description": "Listar um restaurante",
         "produces": ["application/json"],
         "parameters": [
           {
