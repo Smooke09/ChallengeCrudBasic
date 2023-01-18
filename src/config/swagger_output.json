@@ -24,7 +24,7 @@
           {
             "name": "active",
             "in": "query",
-            "description": "Filtro para listar apenas os restaurantes ativos ou inativos",
+            "description": "Filtro para listar apenas os restaurantes apenas os restaurantes inativos digite 'true'",
             "required": false,
             "type": "string"
           }
