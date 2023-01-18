@@ -1,0 +1,6 @@
+.env
+/coverage
+/build
+/node_modules
+
+.en.test
