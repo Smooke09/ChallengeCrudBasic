@@ -32,7 +32,7 @@
         "responses": {}
       }
     },
-    "/store/{id}": {
+    "/stores/{id}": {
       "get": {
         "tags": ["Stores"],
         "summary": "Listar um restaurante",
