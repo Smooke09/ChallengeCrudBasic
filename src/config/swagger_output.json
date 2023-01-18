@@ -9,7 +9,7 @@
       "email": "pedrolucas1014@hotmail.com"
     }
   },
-  "host": "localhost:3333/v1",
+  "host": "testcrud.herokuapp.com//v1",
   "basePath": "/",
   "schemes": ["http", "https"],
   "consumes": ["application/json"],
