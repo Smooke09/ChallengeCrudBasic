@@ -12,6 +12,7 @@ interface Stores {
   store_city: string;
   store_business_hours: string;
   store_is_active: boolean;
+  message?: string;
 }
 
 class Stores extends Model {

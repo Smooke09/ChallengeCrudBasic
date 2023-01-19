@@ -53,9 +53,9 @@ class StoresController {
 
     const newStore = await StoresUsesCases.createStore(store);
 
-    if (!newStore) {
+    if (newStore.message) {
       return res.status(400).json({
-        message: "Store already exists",
+        message: newStore.message,
       });
     }
 

@@ -1,4 +1,5 @@
 import Stores from "../model/storeModel";
+import hasUniqueDayOfWeek from "./helpers/hasUniqueDayOfWeek";
 
 export class StoresUsesCases {
   async getStores(): Promise<Stores[]> {
@@ -15,7 +16,15 @@ export class StoresUsesCases {
     return store;
   }
 
-  async createStore(store: Stores): Promise<Stores | false> {
+  async createStore(store: Stores): Promise<Stores | Record<string, string>> {
+    const validHours = hasUniqueDayOfWeek(store.store_business_hours);
+
+    if (!validHours) {
+      return {
+        message: "Business hours must be unique",
+      };
+    }
+
     const stringfyStores = {
       ...store,
       store_business_hours: JSON.stringify(store.store_business_hours),
@@ -25,7 +34,11 @@ export class StoresUsesCases {
       store_name: store.store_name,
     });
 
-    if (alreadyExists) return false;
+    if (alreadyExists) {
+      return {
+        message: "Store already exists",
+      };
+    }
 
     const newStore = await Stores.query().insert(stringfyStores).returning("*");
 
@@ -71,7 +84,7 @@ export class StoresUsesCases {
     return inactiveStore;
   }
 
-  async storeIsOpen(id: number, date: Date): Promise<boolean> {
+  async storeIsOpen(id: number, date: Date) {
     const store = await Stores.query().findById(id);
 
     if (!store) return false;
@@ -86,7 +99,8 @@ export class StoresUsesCases {
 
     if (!dayBusinessHours) return false;
 
-    const { open_time, close_time } = dayBusinessHours;
+    const { open_time, close_time, open_time_secondary, close_time_secondary } =
+      dayBusinessHours;
 
     const open = new Date(date);
     const close = new Date(date);
@@ -98,6 +112,16 @@ export class StoresUsesCases {
     close.setMinutes(Number(close_time.split(":")[1]));
 
     if (date >= open && date < close) return true;
+
+    if (open_time_secondary && close_time_secondary) {
+      open.setHours(Number(open_time_secondary.split(":")[0]));
+      open.setMinutes(Number(open_time_secondary.split(":")[1]));
+
+      close.setHours(Number(close_time_secondary.split(":")[0]));
+      close.setMinutes(Number(close_time_secondary.split(":")[1]));
+
+      if (date >= open && date < close) return true;
+    }
 
     return false;
   }
