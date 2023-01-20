@@ -14,6 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.StoresUsesCases = void 0;
 const storeModel_1 = __importDefault(require("../model/storeModel"));
+const hasUniqueDayOfWeek_1 = __importDefault(require("./helpers/hasUniqueDayOfWeek"));
 class StoresUsesCases {
     getStores() {
         return __awaiter(this, void 0, void 0, function* () {
@@ -31,12 +32,21 @@ class StoresUsesCases {
     }
     createStore(store) {
         return __awaiter(this, void 0, void 0, function* () {
+            const validHours = (0, hasUniqueDayOfWeek_1.default)(store.store_business_hours);
+            if (!validHours) {
+                return {
+                    message: "Business hours must be unique",
+                };
+            }
             const stringfyStores = Object.assign(Object.assign({}, store), { store_business_hours: JSON.stringify(store.store_business_hours) });
             const alreadyExists = yield storeModel_1.default.query().findOne({
                 store_name: store.store_name,
             });
-            if (alreadyExists)
-                return false;
+            if (alreadyExists) {
+                return {
+                    message: "Store already exists",
+                };
+            }
             const newStore = yield storeModel_1.default.query().insert(stringfyStores).returning("*");
             return newStore;
         });
@@ -80,7 +90,7 @@ class StoresUsesCases {
             const dayBusinessHours = businessHours.find((businessHour) => businessHour.id === day);
             if (!dayBusinessHours)
                 return false;
-            const { open_time, close_time } = dayBusinessHours;
+            const { open_time, close_time, open_time_secondary, close_time_secondary } = dayBusinessHours;
             const open = new Date(date);
             const close = new Date(date);
             open.setHours(Number(open_time.split(":")[0]));
@@ -89,6 +99,14 @@ class StoresUsesCases {
             close.setMinutes(Number(close_time.split(":")[1]));
             if (date >= open && date < close)
                 return true;
+            if (open_time_secondary && close_time_secondary) {
+                open.setHours(Number(open_time_secondary.split(":")[0]));
+                open.setMinutes(Number(open_time_secondary.split(":")[1]));
+                close.setHours(Number(close_time_secondary.split(":")[0]));
+                close.setMinutes(Number(close_time_secondary.split(":")[1]));
+                if (date >= open && date < close)
+                    return true;
+            }
             return false;
         });
     }

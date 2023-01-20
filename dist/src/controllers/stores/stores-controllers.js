@@ -14,13 +14,24 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const storesUseCases_1 = __importDefault(require("../../useCases/storesUseCases"));
 const parseBusinessHours_1 = require("../../useCases/helpers/parseBusinessHours");
+const filterStoresInactive_1 = require("../../useCases/helpers/filterStoresInactive");
 class StoresController {
     getStores(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const stores = yield storesUseCases_1.default.getStores();
-            return res.status(201).json({
+            const { active } = req.query;
+            const storesInactive = (0, filterStoresInactive_1.filterStoresInactive)(stores);
+            if (active === "true") {
+                return res.status(200).json({
+                    message: "Stores found successfully",
+                    stores: storesInactive.map((store) => (0, parseBusinessHours_1.parseBusinessHours)(store)),
+                });
+            }
+            const storesParsed = stores.map((store) => (0, parseBusinessHours_1.parseBusinessHours)(store));
+            const storesInactiveParsed = storesParsed.filter((store) => store.store_is_active === true);
+            return res.status(200).json({
                 message: "Store created successfully",
-                stores: stores.map((store) => (0, parseBusinessHours_1.parseBusinessHours)(store)),
+                stores: storesInactiveParsed,
             });
         });
     }
@@ -33,8 +44,8 @@ class StoresController {
                     message: "Store not found",
                 });
             }
-            return res.status(201).json({
-                message: "Store created successfully",
+            return res.status(200).json({
+                message: "Store found successfully",
                 store: (0, parseBusinessHours_1.parseBusinessHours)(store),
             });
         });
@@ -43,9 +54,9 @@ class StoresController {
         return __awaiter(this, void 0, void 0, function* () {
             const store = req.body;
             const newStore = yield storesUseCases_1.default.createStore(store);
-            if (!newStore) {
+            if (newStore.message) {
                 return res.status(400).json({
-                    message: "Store already exists",
+                    message: newStore.message,
                 });
             }
             return res.status(201).json({
@@ -63,7 +74,7 @@ class StoresController {
                 return res.status(400).json({
                     message: "Store not found",
                 });
-            return res.status(201).json({
+            return res.status(200).json({
                 message: "Store updated successfully",
                 store: (0, parseBusinessHours_1.parseBusinessHours)(updatedStore),
             });
@@ -78,8 +89,8 @@ class StoresController {
                 return res.status(400).json({
                     message: "Store not found",
                 });
-            return res.status(201).json({
-                message: "Store updated successfully",
+            return res.status(200).json({
+                message: "Store updated business hours",
                 store: (0, parseBusinessHours_1.parseBusinessHours)(updatedStore),
             });
         });
@@ -92,7 +103,7 @@ class StoresController {
                 return res.status(400).json({
                     message: "Store not found",
                 });
-            return res.status(201).json({
+            return res.status(200).json({
                 message: "Store updated successfully",
                 store: (0, parseBusinessHours_1.parseBusinessHours)(store),
             });
