@@ -8,17 +8,12 @@ const knexfile: { [key: string]: Knex.Config } = {
   development: {
     client: "postgresql",
     connection: {
-      // host: process.env.DB_HOST,
-      // database: process.env.DATABASE,
-      // user: process.env.DB_USER,
-      // password: process.env.DB_PASSWORD,
-      // port: 5432,
-      // ssl: { rejectUnauthorized: false },
-      host: "localhost",
-      user: "postgres",
-      password: "password",
-      database: "challenge",
-      charset: "utf8",
+      host: process.env.DB_HOST,
+      database: process.env.DATABASE,
+      user: process.env.DB_USER,
+      password: process.env.DB_PASSWORD,
+      port: 5432,
+      ssl: { rejectUnauthorized: false },
     },
 
     migrations: {
